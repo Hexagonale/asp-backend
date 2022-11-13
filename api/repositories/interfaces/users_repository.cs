@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using Api.Repositories.Models;
 
-namespace Api.Repositories.Interfaces
+namespace Api.Repositories.Interfaces;
+
+public interface UsersRepository
 {
-    public interface UsersRepository
-    {
-        User getUser(int id);
+    User getUser(int id);
 
-        List<User> getUsers();
+    List<User> getUsers();
 
-        bool addUser(string username, string password);
-    }
+    bool addUser(string username, string password);
 }

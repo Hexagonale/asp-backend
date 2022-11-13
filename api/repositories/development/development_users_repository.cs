@@ -2,28 +2,27 @@ using System.Collections.Generic;
 using Api.Repositories.Interfaces;
 using Api.Repositories.Models;
 
-namespace Api.Repositories
+namespace Api.Repositories;
+
+public class DevelopmentUsersRepository : UsersRepository
 {
-    public class DevelopmentUsersRepository : UsersRepository
+    public User getUser(int id)
     {
-        public User getUser(int id)
-        {
-            return new User(1, "", "");
-        }
+        return new User(1, "", "");
+    }
 
-        public List<User> getUsers()
-        {
-            List<User> users = new List<User>();
+    public List<User> getUsers()
+    {
+        List<User> users = new List<User>();
 
-            users.Add(new User(1, "admin", "admin"));
-            users.Add(new User(2, "user", "user"));
+        users.Add(new User(1, "admin", "admin"));
+        users.Add(new User(2, "user", "user"));
 
-            return users;
-        }
+        return users;
+    }
 
-        public bool addUser(string username, string password)
-        {
-            return true;
-        }
+    public bool addUser(string username, string password)
+    {
+        return true;
     }
 }
