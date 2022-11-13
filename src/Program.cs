@@ -1,4 +1,10 @@
+using Api.Services;
+using Api.Repositories.Interfaces;
+using Api.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<UsersRepository, DevelopmentUsersRepository>();
+builder.Services.AddScoped<UserService, UserService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
