@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Api.Repositories.Interfaces;
-using Api.Repositories.Models;
+using Api.Repositories;
+using Api.Database;
 
 namespace Api.Services;
 

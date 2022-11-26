@@ -1,5 +1,5 @@
 using Api.Services;
-using Api.Repositories.Interfaces;
+using Api.Database;
 using Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +8,7 @@ builder.Services.AddScoped<UserService, UserService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<AppDbContext>();
 
 var app = builder.Build();
 

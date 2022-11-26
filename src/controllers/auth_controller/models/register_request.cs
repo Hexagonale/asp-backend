@@ -1,4 +1,4 @@
-namespace Api.Controllers.AuthController.Models;
+namespace Api.Controllers.AuthController;
 
 public record RegisterRequest {
     public string username;

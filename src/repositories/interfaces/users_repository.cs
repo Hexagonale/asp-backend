@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-using Api.Repositories.Models;
+using Api.Database;
 
-namespace Api.Repositories.Interfaces;
+namespace Api.Repositories;
 
 public interface UsersRepository
 {

@@ -1,28 +1,33 @@
-using System.Collections.Generic;
-using Api.Repositories.Interfaces;
-using Api.Repositories.Models;
+using Microsoft.EntityFrameworkCore;
+using Api.Database;
 
 namespace Api.Repositories;
 
 public class DevelopmentUsersRepository : UsersRepository
 {
+    private static AppDbContext context = new AppDbContext();
+
     public User getUser(int id)
     {
-        return new User(1, "", "");
+        User user = context.users.Find(id);
+        
+        return user;
     }
 
     public List<User> getUsers()
     {
-        List<User> users = new List<User>();
+        DbSet<User> users = context.users;
 
-        users.Add(new User(1, "admin", "admin"));
-        users.Add(new User(2, "user", "user"));
-
-        return users;
+        return users.ToList();
     }
 
     public bool addUser(string username, string password)
     {
+        User user = new User(username, password);
+
+        context.users.Add(user);
+        context.SaveChanges();
+
         return true;
     }
 }
