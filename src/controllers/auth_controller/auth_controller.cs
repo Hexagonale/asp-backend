@@ -1,31 +1,39 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+
 using Api.Services;
+using System.Security.Claims;
 
 namespace Api.Controllers.AuthController;
 
 [Route("auth")]
 public class AuthController : ControllerBase
 {
+    private readonly ISession _session;
+
     private readonly ILogger<AuthController> _logger;
 
     private readonly UserService _usersService;
 
-    public AuthController(ILogger<AuthController> logger, UserService usersService)
+    public AuthController(IHttpContextAccessor httpContextAccessor, ILogger<AuthController> logger, UserService usersService)
     {
+        _session = httpContextAccessor.HttpContext.Session;
         _logger = logger;
         _usersService = usersService;
     }
 
     [HttpPost]
     [Route("register")]
-    public IActionResult register([FromBody] RegisterRequest request)
+    public IActionResult register([FromForm] RegisterRequest request)
     {
         return Ok(request);
     }
 
     [HttpPost]
     [Route("login")]
-    public IActionResult login([FromBody] LoginRequest request)
+    public IActionResult login([FromForm] LoginRequest request)
     {
         if (request.username == null)
         {
@@ -37,11 +45,13 @@ public class AuthController : ControllerBase
             return StatusCode(400);
         }
 
-        bool authenticated = _usersService.authenticate(request.username, request.password);
-        if (!authenticated)
+        int? userId = _usersService.authenticate(request.username, request.password);
+        if (userId is null)
         {
             return StatusCode(401);
         }
+
+        _session.SetString("id", userId.Value.ToString());
 
         return Ok();
     }

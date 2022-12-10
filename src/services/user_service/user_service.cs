@@ -12,14 +12,12 @@ public class UserService
 
     private readonly UsersRepository _usersRepository;
 
-    public bool authenticate(string username, string password)
+    public int? authenticate(string username, string password)
     {
         List<User> users = _usersRepository.getUsers();
 
         foreach (User user in users)
         {
-            Console.WriteLine(user.username);
-            Console.WriteLine(user.password);
             if (user.username != username)
             {
                 continue;
@@ -30,9 +28,9 @@ public class UserService
                 continue;
             }
 
-            return true;
+            return user.id;
         }
 
-        return false;
+        return null;
     }
 }

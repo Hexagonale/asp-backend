@@ -1,0 +1,51 @@
+﻿@section Styles {
+<style type="text/css">
+    h2 {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    div.form-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    form.login-form {
+        max-width: 400px;
+        height: 300px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+        padding: 40px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 25px 0px;
+        border-radius: 5px;
+    }
+
+    form.login-form>input:last-child {
+        margin-top: 10px;
+    }
+</style>
+}
+@{
+    ViewData["Title"] = "Login";
+}
+<h2>Zaloguj się aby w pełni korzystać z forum</h2>
+
+<div class="form-wrapper">
+    <form class="login-form" asp-controller="auth" asp-action="login" method="post">
+        <div class="form-group">
+            <label for="username">Login</label>
+            <input class="form-control" type="text" name="username">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Hasło</label>
+            <input class="form-control" type="password" name="password">
+        </div>
+
+        <input class="btn btn-primary" type="submit" name="login" value="Zaloguj" />
+    </form>
+</div>

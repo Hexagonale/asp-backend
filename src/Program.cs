@@ -5,6 +5,8 @@ using Api.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<UsersRepository, DevelopmentUsersRepository>();
 builder.Services.AddScoped<UserService, UserService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -24,6 +26,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession(); 
 
 app.UseAuthorization();
 
