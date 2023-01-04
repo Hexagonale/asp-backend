@@ -1,4 +1,5 @@
-﻿@section Styles {
+﻿@page
+@section Styles {
 <style type="text/css">
     h2 {
         text-align: center;
@@ -29,22 +30,50 @@
     }
 </style>
 }
+
 @{
-    ViewData["Title"] = "Login";
+    ViewBag.Title = "Login";
+    @* ViewData["userId"] = HttpContext.Session.GetString("id"); *@
 }
 <h2>Zaloguj się aby w pełni korzystać z forum</h2>
 
+<script type="text/javascript">
+    const onLogin = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const error = document.getElementById('error');
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        if (!username || !password) {
+            error.innerText = "Podaj login i hasło";
+            return;
+        }
+
+        try {
+            const response = await send('POST', 'auth/login', { username, password });
+
+            window.location = '/home';
+        } catch (e) {
+            error.innerText = "Nieprawidłowe dane logowania";
+        }
+    };
+</script>
+
 <div class="form-wrapper">
-    <form class="login-form" asp-controller="auth" asp-action="login" method="post">
+    <form class="login-form" onsubmit="onLogin(event)">
         <div class="form-group">
             <label for="username">Login</label>
-            <input class="form-control" type="text" name="username">
+            <input class="form-control" type="text" name="username" id="username">
         </div>
 
         <div class="form-group">
             <label for="password">Hasło</label>
-            <input class="form-control" type="password" name="password">
+            <input class="form-control" type="password" name="password" id="password">
         </div>
+
+        <p id="error"></p>
 
         <input class="btn btn-primary" type="submit" name="login" value="Zaloguj" />
     </form>

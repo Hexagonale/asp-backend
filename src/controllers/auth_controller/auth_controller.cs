@@ -1,10 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-
 using Api.Services;
-using System.Security.Claims;
 
 namespace Api.Controllers.AuthController;
 
@@ -33,14 +28,14 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public IActionResult login([FromForm] LoginRequest request)
+    public IActionResult login([FromBody] LoginRequest request)
     {
-        if (request.username == null)
+        if (request.username == null || request.password == null)
         {
             return StatusCode(400);
         }
 
-        if (request.password == null)
+        if (request.username == "" || request.password == "")
         {
             return StatusCode(400);
         }
@@ -52,7 +47,6 @@ public class AuthController : ControllerBase
         }
 
         _session.SetString("id", userId.Value.ToString());
-
         return Ok();
     }
 }

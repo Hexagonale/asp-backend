@@ -15,12 +15,12 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View("index", false);
+        return View("index");
     }
 
     public IActionResult Login()
     {
-        return View("login", false);
+        return View("login");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

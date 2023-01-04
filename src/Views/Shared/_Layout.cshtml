@@ -4,11 +4,37 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - api</title>
+    <title>@ViewBag.Title - api</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/api.styles.css" asp-append-version="true" />
     @RenderSection("Styles", false)
+
+    <script>
+        const send = async (method, endpoint, data, query) => {
+            const response = await fetch(`/${endpoint}${query ? '?' + Query.encode(query) : ''}`, {
+                method: method,
+                headers: {
+                    'Content-Type': data ? 'application/json' : 'plain/text',
+                },
+                body: data ? JSON.stringify(data) : undefined,
+                credentials: 'include',
+            });
+
+            // if (endpoint !== 'logout' && response.status === 403) {
+            //     window.location.href = '/logout';
+            //     return {};
+            // }
+
+            if (response.headers.get('content-type')?.match(/application\/json/g)) {
+                if (response.status !== 200) throw await response.json();
+                return await response.json();
+            } else {
+                if (response.status !== 200) throw await response.text();
+                return await response.text();
+            }
+        };
+    </script>
 </head>
 
 <body>
@@ -20,7 +46,7 @@
                 </li>
                 <div class="d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (Model)
+                        @if (false)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Dodaj
@@ -34,7 +60,8 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="home" asp-action="login">Zaloguj</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="login">Zaloguj</a>
                             </li>
                         }
                     </ul>
@@ -44,6 +71,8 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @* @ViewBag["userId"] *@
+
             @RenderBody()
         </main>
     </div>
