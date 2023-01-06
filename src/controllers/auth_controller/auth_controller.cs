@@ -10,9 +10,9 @@ public class AuthController : ControllerBase
 
     private readonly ILogger<AuthController> _logger;
 
-    private readonly UserService _usersService;
+    private readonly UsersService _usersService;
 
-    public AuthController(IHttpContextAccessor httpContextAccessor, ILogger<AuthController> logger, UserService usersService)
+    public AuthController(IHttpContextAccessor httpContextAccessor, ILogger<AuthController> logger, UsersService usersService)
     {
         _session = httpContextAccessor.HttpContext.Session;
         _logger = logger;
@@ -61,7 +61,7 @@ public class AuthController : ControllerBase
             return StatusCode(401);
         }
 
-        _session.SetString("id", userId.Value.ToString());
+        _session.SetInt32("id", userId.Value);
         return Ok();
     }
 

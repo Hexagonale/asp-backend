@@ -21,13 +21,13 @@ public class DevelopmentPostsRepository : PostsRepository
         return posts.ToList();
     }
 
-    public bool addPost(string title, string content, DateTime created, User author)
+    public Post addPost(string title, string content, DateTime created, User author)
     {
         Post post = new Post(title, content, created, author);
 
-        context.posts.Add(post);
+        Post added = context.posts.Add(post).Entity;
         context.SaveChanges();
 
-        return true;
+        return added;
     }
 }

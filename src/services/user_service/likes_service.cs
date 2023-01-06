@@ -3,9 +3,9 @@ using Api.Database;
 
 namespace Api.Services;
 
-public class LikeService
+public class LikesService
 {
-    public LikeService(LikesRepository likesRepository)
+    public LikesService(LikesRepository likesRepository)
     {
         _likesRepository = likesRepository;
     }

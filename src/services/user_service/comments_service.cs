@@ -3,9 +3,9 @@ using Api.Database;
 
 namespace Api.Services;
 
-public class CommentService
+public class CommentsService
 {
-    public CommentService(CommentsRepository commentsRepository)
+    public CommentsService(CommentsRepository commentsRepository)
     {
         _commentsRepository = commentsRepository;
     }

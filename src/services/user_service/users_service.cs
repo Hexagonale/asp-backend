@@ -3,9 +3,9 @@ using Api.Database;
 
 namespace Api.Services;
 
-public class UserService
+public class UsersService
 {
-    public UserService(UsersRepository usersRepository)
+    public UsersService(UsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
     }

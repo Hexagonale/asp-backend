@@ -4,7 +4,13 @@ using Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<UsersRepository, DevelopmentUsersRepository>();
-builder.Services.AddScoped<UserService, UserService>();
+builder.Services.AddScoped<PostsRepository, DevelopmentPostsRepository>();
+builder.Services.AddScoped<CommentsRepository, DevelopmentCommentsRepository>();
+builder.Services.AddScoped<LikesRepository, DevelopmentLikesRepository>();
+builder.Services.AddScoped<UsersService, UsersService>();
+builder.Services.AddScoped<PostsService, PostsService>();
+builder.Services.AddScoped<CommentsService, CommentsService>();
+builder.Services.AddScoped<LikesService, LikesService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 
