@@ -21,9 +21,24 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public IActionResult register([FromForm] RegisterRequest request)
+    public IActionResult register([FromBody] RegisterRequest request)
     {
-        return Ok(request);
+        if (request.username == null || request.password == null)
+        {
+            return StatusCode(400);
+        }
+
+        if (request.username == "" || request.password == "")
+        {
+            return StatusCode(400);
+        }
+
+        bool success = _usersService.createUser(request.username, request.password);
+        if(!success) {
+            return StatusCode(403);
+        }
+
+        return Ok();
     }
 
     [HttpPost]
@@ -48,5 +63,14 @@ public class AuthController : ControllerBase
 
         _session.SetString("id", userId.Value.ToString());
         return Ok();
+    }
+
+    [HttpGet]
+    [Route("logout")]
+    public IActionResult logout()
+    {
+        _session.Remove("id");
+
+        return new RedirectResult(url: "/");
     }
 }

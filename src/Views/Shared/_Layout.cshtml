@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -46,19 +49,23 @@
                 </li>
                 <div class="d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (false)
+                        @if (@HttpContextAccessor.HttpContext.Session.GetString("id") != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Dodaj
                                     nowy post</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Index">Wyloguj</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="auth"
+                                asp-action="logout">Wyloguj</a>
                             </li>
                         }
                         else
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="register">Zarejestruj</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home"
                                 asp-action="login">Zaloguj</a>
@@ -71,8 +78,6 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @* @ViewBag["userId"] *@
-
             @RenderBody()
         </main>
     </div>

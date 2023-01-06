@@ -33,4 +33,15 @@ public class UserService
 
         return null;
     }
+
+    public bool createUser(string username, string password) {
+        List<User> users = _usersRepository.getUsers();
+        foreach(User user in users) {
+            if(user.username == username) {
+                return false;
+            }
+        }
+
+        return _usersRepository.addUser(username, password);
+    }
 }

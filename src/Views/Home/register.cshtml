@@ -12,7 +12,7 @@
         justify-content: center;
     }
 
-    form.login-form {
+    form.register-form {
         max-width: 400px;
         height: 300px;
         flex: 1;
@@ -25,18 +25,18 @@
         border-radius: 5px;
     }
 
-    form.login-form>input:last-child {
+    form.register-form>input:last-child {
         margin-top: 10px;
     }
 </style>
 }
 
 @{
-    ViewBag.Title = "Logowanie";
+    ViewBag.Title = "Rejestracja";
 }
 
 <script type="text/javascript">
-    const onLogin = async (e) => {
+    const onRegister = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -50,19 +50,20 @@
         }
 
         try {
-            const response = await send('POST', 'auth/login', { username, password });
+            const response = await send('POST', 'auth/register', { username, password });
 
             window.location = '/home';
         } catch (e) {
-            error.innerText = "Nieprawidłowe dane logowania";
+            console.log(e);
+            error.innerText = "Nie można założyć konta dla podanych danych, spróbuj ponownie.";
         }
     };
 </script>
 
-<h2>Zaloguj się aby w pełni korzystać z forum</h2>
+<h2>Zarejestruj się aby w pełni korzystać z forum</h2>
 
 <div class="form-wrapper">
-    <form class="login-form" onsubmit="onLogin(event)">
+    <form class="register-form" onsubmit="onRegister(event)">
         <div class="form-group">
             <label for="username">Login</label>
             <input class="form-control" type="text" name="username" id="username">

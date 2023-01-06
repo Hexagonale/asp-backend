@@ -13,19 +13,17 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult index()
     {
         return View("index");
     }
 
-    public IActionResult Login()
+    public IActionResult login()
     {
         return View("login");
     }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    public IActionResult register()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View("register");
     }
 }
