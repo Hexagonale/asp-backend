@@ -8,5 +8,5 @@ public interface PostsRepository
 
     List<Post> getPosts();
 
-    bool addPost(string title, string content, User createdBy);
+    public bool addPost(string title, string content, DateTime created, User author);
 }

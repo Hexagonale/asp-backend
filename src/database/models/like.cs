@@ -3,33 +3,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Database;
 
-[Table("forum_posts")]
-public class Post
+[Table("forum_likes")]
+public class Like
 {
-    public Post(int id, string title, string content, DateTime created, User author) {
+    public Like(int id, DateTime created, User author, Post post) {
         this.id = id;
-        this.title = title;
-        this.content = content;
         this.created = created;
         this.author = author;
+        this.post = post;
     }
 
-    public Post(string title, string content, DateTime created, User author) {
-        this.title = title;
-        this.content = content;
+    public Like(DateTime created, User author, Post post) {
         this.created = created;
         this.author = author;
+        this.post = post;
     }
 
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int id {get; set;}
 
-    public string title {get; set;}
-
-    public string content {get; set;}
-
     public DateTime created {get; set;}
 
     public User author {get; set;}
+
+    public Post post {get; set;}
 }

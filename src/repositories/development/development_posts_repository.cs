@@ -9,9 +9,9 @@ public class DevelopmentPostsRepository : PostsRepository
 
     public Post getPost(int id)
     {
-        Post user = context.posts.Find(id);
+        Post like = context.posts.Find(id);
         
-        return user;
+        return like;
     }
 
     public List<Post> getPosts()
@@ -21,9 +21,9 @@ public class DevelopmentPostsRepository : PostsRepository
         return posts.ToList();
     }
 
-    public bool addPost(string title, string content, User createdBy)
+    public bool addPost(string title, string content, DateTime created, User author)
     {
-        Post post = new Post(title, content, createdBy);
+        Post post = new Post(title, content, created, author);
 
         context.posts.Add(post);
         context.SaveChanges();
