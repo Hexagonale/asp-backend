@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Api.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 

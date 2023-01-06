@@ -1,5 +1,4 @@
-﻿using Api.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Api.Database;
 
@@ -7,6 +6,8 @@ public class AppDbContext: DbContext {
     const string databaseName = "database.db";
 
     public DbSet<User> users { get; set; }
+
+    public DbSet<Post> posts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         System.Environment.SpecialFolder folder = System.Environment.SpecialFolder.LocalApplicationData;
