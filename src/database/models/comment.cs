@@ -14,6 +14,12 @@ public class Comment
         this.post = post;
     }
 
+    public Comment(int id, string content, DateTime created) {
+        this.id = id;
+        this.content = content;
+        this.created = created;
+    }
+
     public Comment(string content, DateTime created, User author, Post post) {
         this.content = content;
         this.created = created;

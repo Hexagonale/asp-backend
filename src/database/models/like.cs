@@ -12,6 +12,11 @@ public class Like
         this.author = author;
         this.post = post;
     }
+    
+    public Like(int id, DateTime created) {
+        this.id = id;
+        this.created = created;
+    }
 
     public Like(DateTime created, User author, Post post) {
         this.created = created;

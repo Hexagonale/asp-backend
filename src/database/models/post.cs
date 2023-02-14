@@ -14,6 +14,13 @@ public class Post
         this.author = author;
     }
 
+    public Post(int id, string title, string content, DateTime created) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.created = created;
+    }
+
     public Post(string title, string content, DateTime created, User author) {
         this.title = title;
         this.content = content;
