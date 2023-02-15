@@ -5,7 +5,11 @@ namespace Api.Repositories;
 
 public class DevelopmentPostsRepository : PostsRepository
 {
-    private static AppDbContext context = new AppDbContext();
+    private AppDbContext context;
+
+    public DevelopmentPostsRepository(AppDbContext context) {
+        this.context = context;
+    }
 
     public Post getPost(int id)
     {
@@ -16,9 +20,9 @@ public class DevelopmentPostsRepository : PostsRepository
 
     public List<Post> getPosts()
     {
-        DbSet<Post> posts = context.posts;
-
-        return posts.ToList();
+        List<Post> posts = context.posts.Include(p => p.author).ToList();
+        
+        return posts;
     }
 
     public Post addPost(string title, string content, DateTime created, User author)

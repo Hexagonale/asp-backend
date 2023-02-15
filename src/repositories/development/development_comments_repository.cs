@@ -5,7 +5,11 @@ namespace Api.Repositories;
 
 public class DevelopmentCommentsRepository : CommentsRepository
 {
-    private static AppDbContext context = new AppDbContext();
+    private AppDbContext context;
+
+    public DevelopmentCommentsRepository(AppDbContext context) {
+        this.context = context;
+    }
 
     public Comment getComment(int id)
     {

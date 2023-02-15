@@ -5,7 +5,11 @@ namespace Api.Repositories;
 
 public class DevelopmentLikesRepository : LikesRepository
 {
-    private static AppDbContext context = new AppDbContext();
+    private AppDbContext context;
+
+    public DevelopmentLikesRepository(AppDbContext context) {
+        this.context = context;
+    }
 
     public Like getLike(int id)
     {

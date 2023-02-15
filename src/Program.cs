@@ -3,6 +3,7 @@ using Api.Database;
 using Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<UsersRepository, DevelopmentUsersRepository>();
 builder.Services.AddScoped<PostsRepository, DevelopmentPostsRepository>();
 builder.Services.AddScoped<CommentsRepository, DevelopmentCommentsRepository>();

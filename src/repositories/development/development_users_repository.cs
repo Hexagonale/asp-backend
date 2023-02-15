@@ -5,7 +5,11 @@ namespace Api.Repositories;
 
 public class DevelopmentUsersRepository : UsersRepository
 {
-    private static AppDbContext context = new AppDbContext();
+    private AppDbContext context;
+
+    public DevelopmentUsersRepository(AppDbContext context) {
+        this.context = context;
+    }
 
     public User getUser(int id)
     {
