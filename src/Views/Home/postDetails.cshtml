@@ -4,20 +4,14 @@
 
 @section Styles {
 <style type="text/css">
-  .posts {
+  .post {
     display: flex;
     flex-direction: column;
-  }
-
-  .posts > .post {
-    display: flex;
-    flex-direction: column;
-    background: #eee;
     margin: 4px;
     padding: 16px;
   }
 
-  .posts > .post > .post-header {
+  .post > .post-header {
     display: flex;
     justify-content: space-between;
   }
@@ -25,54 +19,48 @@
 }
 
 <script type="text/javascript">
-  const loadPosts = async () => {
-    const postsDiv = document.getElementsByClassName("posts")[0];
+  const postId = @ViewBag.postId;
+
+  const loadPost = async () => {
+    const postDiv = document.getElementsByClassName("post")[0];
 
     try {
-      const posts = await send("GET", "posts");
-      if (posts.length === 0) {
-        postsDiv.innerText = "Brak postów";
+      const post = await send("GET", `posts/${postId}`);
+      if (!post) {
+        throw "No post";
       }
 
-      postsDiv.innerText = "";
-      for (const post of posts) {
-        const postDiv = document.createElement("div");
-        postDiv.classList.add("post");
+      postDiv.innerText = "";
+      const header = document.createElement("div");
+      header.classList.add("post-header");
 
-        const header = document.createElement("div");
-        header.classList.add("post-header");
+      const title = document.createElement("h2");
+      title.innerText = post.title;
 
-        const title = document.createElement("a");
-        title.innerText = post.title;
-        title.href = `home/posts/${post.id}`;
+      const date = document.createElement("p");
+      date.innerText =
+        post.author.username +
+        " - " +
+        new Date(post.created).toLocaleDateString();
 
-        const date = document.createElement("p");
-        date.innerText =
-          post.author.username +
-          " - " +
-          new Date(post.created).toLocaleDateString();
+      header.appendChild(title);
+      header.appendChild(date);
 
-        header.appendChild(title);
-        header.appendChild(date);
+      const content = document.createElement("div");
+      content.innerText = post.content.substring(0, 150);
 
-        const content = document.createElement("div");
-        content.innerText = post.content.substring(0, 150);
-
-        postDiv.appendChild(header);
-        postDiv.appendChild(content);
-
-        postsDiv.appendChild(postDiv);
-      }
+      postDiv.appendChild(header);
+      postDiv.appendChild(content);
     } catch (e) {
-      postsDiv.innerText = "Błąd podczas ładowania postów";
+      postDiv.innerText = "Błąd podczas ładowania posta";
     }
   };
 
   document.addEventListener("DOMContentLoaded", () => {
-    loadPosts();
+    loadPost();
   });
 </script>
 
-<div class="posts">
-  <p>Ładowanie postów</p>
+<div class="post">
+  <p>Ładowanie posta</p>
 </div>

@@ -29,4 +29,12 @@ public class HomeController : Controller
     {
         return View("newPost");
     }
+
+    [Route("home/posts/{id}")]
+    public IActionResult postDetails(int id)
+    {
+        ViewBag.postId = id;
+
+        return View("postDetails");
+    }
 }
