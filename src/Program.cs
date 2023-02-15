@@ -14,6 +14,11 @@ builder.Services.AddScoped<LikesService, LikesService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 
+builder.Services.Configure<CookiePolicyOptions>(options => {
+    options.CheckConsentNeeded = context => false;
+  options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<AppDbContext>();
