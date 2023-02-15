@@ -13,7 +13,7 @@ public class DevelopmentPostsRepository : PostsRepository
 
     public Post getPost(int id)
     {
-        Post like = context.posts.Find(id);
+        Post like = context.posts.Where(p => p.id == id).Include(p => p.author).FirstOrDefault();
         
         return like;
     }

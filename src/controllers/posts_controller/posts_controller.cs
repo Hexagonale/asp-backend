@@ -29,6 +29,22 @@ public class PostsController : ControllerBase
         return Ok(posts);
     }
 
+    [HttpGet]
+    [Route("{id}")]
+    public IActionResult getPost(int? id)
+    {
+        if(id is  null) {
+            return StatusCode(400);
+        }
+
+        Post post = _postsService.getPost(id.Value);
+        if(post is null) {
+            return StatusCode(404);
+        }
+
+        return Ok(post);
+    }
+
     [HttpPut]
     [Route("")]
     public IActionResult addPost([FromBody] AddPostRequest request)

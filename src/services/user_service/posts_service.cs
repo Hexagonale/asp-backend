@@ -18,6 +18,9 @@ public class PostsService
     public List<Post> getPosts() {
         return _postsRepository.getPosts();
     }
+    public Post getPost(int id) {
+        return _postsRepository.getPost(id);
+    }
 
     public Post addPost(string title, string content, int userId) {
         User user = _usersRepository.getUser(userId);
