@@ -1,0 +1,79 @@
+@page
+@section Styles {
+    <style type="text/css">
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        div.form-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        form.post-form {
+            max-width: 800px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: stretch;
+            padding: 40px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 25px 0px;
+            border-radius: 5px;
+        }
+
+        form.post-form>input:last-child {
+            margin-top: 10px;
+        }
+    </style>
+}
+
+@{
+    ViewBag.Title = "Nowy post";
+}
+
+<script type="text/javascript">
+    const onPost = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const error = document.getElementById('error');
+
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+        if (!title || !content) {
+            error.innerText = "Podaj tytuł i zawartość posta";
+            return;
+        }
+
+        try {
+            const response = await send('PUT', 'posts', { title, content });
+
+            window.location = '/home';
+        } catch (e) {
+            error.innerText = "Nie udało się dodać posta";
+        }
+    };
+</script>
+
+<h2>Dodaj nowy post</h2>
+
+<div class="form-wrapper">
+    <form class="post-form" onsubmit="onPost(event)">
+        <div class="form-group">
+            <label for="title">Tytuł</label>
+            <input class="form-control" type="text" name="title" id="title">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Zawartość</label>
+            <textarea class="form-control" type="content" name="content" id="content"></textarea>
+        </div>
+
+        <p id="error"></p>
+
+        <input class="btn btn-primary" type="submit" name="post" value="Dodaj" />
+    </form>
+</div>

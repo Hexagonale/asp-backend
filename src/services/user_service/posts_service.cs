@@ -15,6 +15,10 @@ public class PostsService
 
     private readonly UsersRepository _usersRepository;
 
+    public List<Post> getPosts() {
+        return _postsRepository.getPosts();
+    }
+
     public Post addPost(string title, string content, int userId) {
         User user = _usersRepository.getUser(userId);
         if(user is null) {

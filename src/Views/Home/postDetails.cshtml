@@ -1,0 +1,78 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles {
+<style type="text/css">
+  .posts {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .posts > .post {
+    display: flex;
+    flex-direction: column;
+    background: #eee;
+    margin: 4px;
+    padding: 16px;
+  }
+
+  .posts > .post > .post-header {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+}
+
+<script type="text/javascript">
+  const loadPosts = async () => {
+    const postsDiv = document.getElementsByClassName("posts")[0];
+
+    try {
+      const posts = await send("GET", "posts");
+      if (posts.length === 0) {
+        postsDiv.innerText = "Brak postów";
+      }
+
+      postsDiv.innerText = "";
+      for (const post of posts) {
+        const postDiv = document.createElement("div");
+        postDiv.classList.add("post");
+
+        const header = document.createElement("div");
+        header.classList.add("post-header");
+
+        const title = document.createElement("a");
+        title.innerText = post.title;
+        title.href = `home/posts/${post.id}`;
+
+        const date = document.createElement("p");
+        date.innerText =
+          post.author.username +
+          " - " +
+          new Date(post.created).toLocaleDateString();
+
+        header.appendChild(title);
+        header.appendChild(date);
+
+        const content = document.createElement("div");
+        content.innerText = post.content.substring(0, 150);
+
+        postDiv.appendChild(header);
+        postDiv.appendChild(content);
+
+        postsDiv.appendChild(postDiv);
+      }
+    } catch (e) {
+      postsDiv.innerText = "Błąd podczas ładowania postów";
+    }
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    loadPosts();
+  });
+</script>
+
+<div class="posts">
+  <p>Ładowanie postów</p>
+</div>

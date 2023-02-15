@@ -24,4 +24,9 @@ public class HomeController : Controller
     {
         return View("register");
     }
+
+    public IActionResult newPost()
+    {
+        return View("newPost");
+    }
 }
