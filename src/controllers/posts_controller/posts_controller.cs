@@ -20,8 +20,17 @@ public class PostsController : ControllerBase
         _postsService = postsService;
     }
 
+    [HttpGet]
+    [Route("")]
+    public IActionResult getPosts()
+    {
+        List<Post> posts = _postsService.getPosts();
+
+        return Ok(posts);
+    }
+
     [HttpPut]
-    [Route("/")]
+    [Route("")]
     public IActionResult addPost([FromBody] AddPostRequest request)
     {
         int? userId = _session.GetInt32("id");

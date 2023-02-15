@@ -23,6 +23,9 @@ public class DevelopmentLikesRepository : LikesRepository
 
     public bool addLike(DateTime created, User author, Post post)
     {
+        context.users.Attach(author);
+        context.posts.Attach(post);
+
         Like like = new Like(created, author, post);
 
         context.likes.Add(like);

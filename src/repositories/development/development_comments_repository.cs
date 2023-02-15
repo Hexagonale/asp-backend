@@ -23,6 +23,9 @@ public class DevelopmentCommentsRepository : CommentsRepository
 
     public bool addComment(string content, DateTime created, User author, Post post)
     {
+        context.users.Attach(author);
+        context.posts.Attach(post);
+
         Comment comment = new Comment(content, created, author, post);
 
         context.comments.Add(comment);

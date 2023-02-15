@@ -23,6 +23,8 @@ public class DevelopmentPostsRepository : PostsRepository
 
     public Post addPost(string title, string content, DateTime created, User author)
     {
+        context.users.Attach(author);
+
         Post post = new Post(title, content, created, author);
 
         Post added = context.posts.Add(post).Entity;
