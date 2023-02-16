@@ -12,8 +12,11 @@ public class UsersService
 
     private readonly UsersRepository _usersRepository;
 
-    public int? authenticate(string username, string password)
-    {
+    public User getUser(int id) {
+        return _usersRepository.getUser(id);
+    }
+
+    public User authenticate(string username, string password) {
         List<User> users = _usersRepository.getUsers();
 
         foreach (User user in users)
@@ -28,7 +31,7 @@ public class UsersService
                 continue;
             }
 
-            return user.id;
+            return user;
         }
 
         return null;
@@ -42,6 +45,6 @@ public class UsersService
             }
         }
 
-        return _usersRepository.addUser(username, password);
+        return _usersRepository.addUser(username, password, false);
     }
 }

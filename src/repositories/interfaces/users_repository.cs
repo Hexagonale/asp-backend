@@ -8,5 +8,5 @@ public interface UsersRepository
 
     List<User> getUsers();
 
-    bool addUser(string username, string password);
+    bool addUser(string username, string password, bool isAdmin);
 }

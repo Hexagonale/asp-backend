@@ -30,4 +30,8 @@ public class PostsService
 
         return _postsRepository.addPost(title, content, DateTime.Now, user);
     }
+
+    public bool removePost(int id) {
+        return _postsRepository.removePost(id);
+    }
 }

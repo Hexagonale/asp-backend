@@ -14,7 +14,8 @@
     @RenderSection("Styles", false)
 
     <script>
-        const loggedIn = '@HttpContextAccessor.HttpContext.Session.GetString("id")' != '';
+        const loggedIn = '@HttpContextAccessor.HttpContext.Session.GetInt32("id")' != '';
+        const isAdmin = '@HttpContextAccessor.HttpContext.Session.GetInt32("isAdmin")' == 1;
 
         const send = async (method, endpoint, data, query) => {
             const response = await fetch(`/${endpoint}${query ? '?' + Query.encode(query) : ''}`, {
@@ -51,7 +52,7 @@
                 </li>
                 <div class="d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (@HttpContextAccessor.HttpContext.Session.GetString("id") != null)
+                        @if (@HttpContextAccessor.HttpContext.Session.GetInt32("id") != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="newPost">Dodaj

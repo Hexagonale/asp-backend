@@ -24,9 +24,9 @@ public class DevelopmentUsersRepository : UsersRepository {
         return users.ToList();
     }
 
-    public bool addUser(string username, string password)
+    public bool addUser(string username, string password, bool isAdmin)
     {
-        User user = new User(username, password);
+        User user = new User(username, password, isAdmin);
 
         context.users.Add(user);
         context.SaveChanges();

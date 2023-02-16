@@ -9,4 +9,6 @@ public interface PostsRepository
     List<Post> getPosts();
 
     public Post addPost(string title, string content, DateTime created, User author);
+
+    public bool removePost(int id);
 }

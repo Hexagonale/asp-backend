@@ -26,8 +26,8 @@ public class AppDbContext: DbContext {
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<User>().HasData(
-            new User(1, "admin", "admin"),
-            new User(2, "user", "user")
+            new User(1, "admin", "admin", true),
+            new User(2, "user", "user", false)
         );
 
     //     modelBuilder.Entity<Book>()

@@ -12,9 +12,9 @@ public class DevelopmentPostsRepository : PostsRepository {
 
     public Post getPost(int id)
     {
-        Post like = context.posts.Where(p => p.id == id).Include(p => p.author).FirstOrDefault();
+        Post post = context.posts.Where(p => p.id == id).Include(p => p.author).FirstOrDefault();
         
-        return like;
+        return post;
     }
 
     public List<Post> getPosts()
@@ -34,5 +34,17 @@ public class DevelopmentPostsRepository : PostsRepository {
         context.SaveChanges();
 
         return added;
+    }
+
+    public bool removePost(int id) {
+        Post post = context.posts.Where(p => p.id == id).FirstOrDefault();
+        if(post is null) {
+            return false;
+        }
+
+        context.posts.Remove(post);
+        context.SaveChanges();
+
+        return true;
     }
 }

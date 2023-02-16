@@ -12,6 +12,7 @@
     flex-direction: column;
     margin-bottom: 32px;
     padding: 16px;
+    padding-bottom: 8px;
 
     border-radius: 8px;
     box-shadow: 5px 5px 25px 0px rgba(0, 0, 0, 0.1);
@@ -20,6 +21,25 @@
   .post > .post-header {
     display: flex;
     justify-content: space-between;
+  }
+
+  .post > .post-footer {
+    display: flex;
+  }
+
+  .post > .post-footer > .post-button {
+    margin-top: 32px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .post > .post-footer > .post-button.like {
+    color: rgb(58, 156, 126);
+    margin-right: 16px;
+  }
+
+  .post > .post-footer > .post-button.remove {
+    color: red;
   }
 
   .comments {
@@ -48,6 +68,46 @@
 
 <script type="text/javascript">
   const postId = @ViewBag.postId;
+  
+  const removePost = async () => {
+    try {
+      await send("DELETE", `posts/${postId}`);
+
+      window.location = '/home';
+    } catch (e) {
+      error.innerText = "Nie usunąć posta";
+    }
+  }
+
+  const likePost = async () => {
+    try {
+      @* await send("DELETE", `posts/${postId}`); *@
+
+      @* window.location = '/home'; *@
+    } catch (e) {
+      error.innerText = "Nie można polubić";
+    }
+  }
+
+  const createRemoveButton = () => {
+    const removeButton = document.createElement("p");
+    removeButton.classList.add('post-button');
+    removeButton.classList.add('remove');
+    removeButton.innerText = 'Usuń';
+    removeButton.onclick = () => removePost();
+
+    return removeButton;
+  }
+
+  const createLikeButton = () => {
+    const removeButton = document.createElement("p");
+    removeButton.classList.add('post-button');
+    removeButton.classList.add('like');
+    removeButton.innerText = 'Polub';
+    removeButton.onclick = () => likePost();
+
+    return removeButton;
+  }
 
   const loadPost = async () => {
     const postDiv = document.getElementsByClassName("post")[0];
@@ -77,8 +137,26 @@
       const content = document.createElement("div");
       content.innerText = post.content;
 
+      const footer = document.createElement("div");
+      footer.classList.add('post-footer');
+
+
+      @* const isYourPost = '@HttpContextAccessor.HttpContext.Session.GetInt32("id")' == post.author.id;
+      if(!isYourPost) {
+        const likeButton = createLikeButton();
+
+        footer.appendChild(likeButton);
+      } *@
+
+      if(isAdmin) {
+        const removeButton = createRemoveButton();
+
+        footer.appendChild(removeButton);
+      }
+
       postDiv.appendChild(header);
       postDiv.appendChild(content);
+      postDiv.appendChild(footer);
     } catch (e) {
       console.trace(e);
       postDiv.innerText = "Błąd podczas ładowania posta";
@@ -161,7 +239,7 @@
 <div class="comments">
   <p>Ładowanie komentarzy</p>
 </div>
-@if (@HttpContextAccessor.HttpContext.Session.GetString("id") != null) {
+@if (@HttpContextAccessor.HttpContext.Session.GetInt32("id") != null) {
 <form class="comment-form" onsubmit="addComment(event)">
   <p class="comment-error"></p>
 

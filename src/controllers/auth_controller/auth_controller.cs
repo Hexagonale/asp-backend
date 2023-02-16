@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Services;
+using Api.Database;
 
 namespace Api.Controllers.AuthController;
 
@@ -45,23 +46,22 @@ public class AuthController : ControllerBase
     [Route("login")]
     public IActionResult login([FromBody] LoginRequest request)
     {
-        if (request.username == null || request.password == null)
-        {
+        if (request.username == null || request.password == null) {
             return StatusCode(400);
         }
 
-        if (request.username == "" || request.password == "")
-        {
+        if (request.username == "" || request.password == "") {
             return StatusCode(400);
         }
 
-        int? userId = _usersService.authenticate(request.username, request.password);
-        if (userId is null)
-        {
+        User user = _usersService.authenticate(request.username, request.password);
+        if (user is null) {
             return StatusCode(401);
         }
 
-        _session.SetInt32("id", userId.Value);
+        _session.SetInt32("id", user.id);
+        _session.SetInt32("isAdmin", user.isAdmin ? 1 : 0);
+
         return Ok();
     }
 
