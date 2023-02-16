@@ -6,12 +6,12 @@ namespace Api.Database;
 [Table("forum_comments")]
 public class Comment
 {
-    public Comment(int id, string content, DateTime created, User author, Post post) {
+    public Comment(int id, string content, DateTime created, User author, int postId) {
         this.id = id;
         this.content = content;
         this.created = created;
         this.author = author;
-        this.post = post;
+        this.postId = postId;
     }
 
     public Comment(int id, string content, DateTime created) {
@@ -20,11 +20,11 @@ public class Comment
         this.created = created;
     }
 
-    public Comment(string content, DateTime created, User author, Post post) {
+    public Comment(string content, DateTime created, User author, int postId) {
         this.content = content;
         this.created = created;
         this.author = author;
-        this.post = post;
+        this.postId = postId;
     }
 
     [Key]
@@ -37,5 +37,5 @@ public class Comment
 
     public User author {get; set;}
 
-    public Post post {get; set;}
+    public int postId {get; set;}
 }

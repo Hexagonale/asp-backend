@@ -19,21 +19,19 @@ public class DevelopmentCommentsRepository : CommentsRepository {
 
     public List<Comment> getComments()
     {
-        DbSet<Comment> comments = context.comments;
+        List<Comment> comments = context.comments.Include(c => c.author).ToList();
 
-        return comments.ToList();
+        return comments;
     }
 
-    public bool addComment(string content, DateTime created, User author, Post post)
+    public Comment addComment(string content, DateTime created, User author, int postId)
     {
         context.users.Attach(author);
-        context.posts.Attach(post);
 
-        Comment comment = new Comment(content, created, author, post);
-
-        context.comments.Add(comment);
+        Comment comment = new Comment(content, created, author, postId);
+        Comment added = context.comments.Add(comment).Entity;
         context.SaveChanges();
 
-        return true;
+        return added;
     }
 }

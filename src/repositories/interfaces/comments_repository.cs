@@ -8,5 +8,5 @@ public interface CommentsRepository
 
     List<Comment> getComments();
 
-    public bool addComment(string content, DateTime created, User author, Post post);
+    public Comment addComment(string content, DateTime created, User author, int postId);
 }

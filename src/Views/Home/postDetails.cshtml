@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -7,13 +10,34 @@
   .post {
     display: flex;
     flex-direction: column;
-    margin: 4px;
-    padding: 16px;
+    margin-bottom: 32px;
   }
 
   .post > .post-header {
     display: flex;
     justify-content: space-between;
+  }
+
+  .comments {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .comments > div {
+    background: #eee;
+    margin-bottom: 8px;
+    padding: 8px;
+  }
+
+  .comment-form  {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .comment-form > input[type="submit"] {
+    align-self: flex-end;
+    margin-top: 16px;
   }
 </style>
 }
@@ -47,20 +71,98 @@
       header.appendChild(date);
 
       const content = document.createElement("div");
-      content.innerText = post.content.substring(0, 150);
+      content.innerText = post.content;
 
       postDiv.appendChild(header);
       postDiv.appendChild(content);
     } catch (e) {
+      console.trace(e);
       postDiv.innerText = "Błąd podczas ładowania posta";
+    }
+  };
+
+  const loadComments = async () => {
+    const commentsDiv = document.getElementsByClassName("comments")[0];
+
+    if (!loggedIn) {
+      commentsDiv.innerText = "Zaloguj się aby zobaczyć lub dodać komentarze";
+      return;
+    }
+
+    try {
+      const comments = await send("GET", `comments`);
+      if (comments.length === 0) {
+        commentsDiv.innerText = "Ten post nie ma jeszcze komentarzy";
+        return;
+      }
+
+      commentsDiv.innerText = "";
+
+      for (const comment of comments) {
+        const commentDiv = document.createElement("div");
+
+        const title = document.createElement("p");
+        title.innerText =
+          comment.author.username +
+          " - " +
+          new Date(comment.created).toLocaleDateString();
+
+        const content = document.createElement("div");
+        content.innerText = comment.content;
+
+        commentDiv.appendChild(title);
+        commentDiv.appendChild(content);
+
+        commentsDiv.appendChild(commentDiv);
+      }
+    } catch (e) {
+      console.trace(e);
+      commentsDiv.innerText = "Błąd podczas ładowania komentarzy";
+    }
+  };
+
+  const addComment = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const error = document.getElementById("comment-error");
+
+    const comment = document.getElementById("comment-text-area").value;
+    if (!comment) {
+      error.innerText = "Podaj komentarz";
+      return;
+    }
+
+    try {
+      await send("PUT", "comments", {
+        content: comment.trim(),
+        postId,
+      });
+
+      location.reload();
+    } catch (e) {
+      error.innerText = "Nie można dodać komentarza";
     }
   };
 
   document.addEventListener("DOMContentLoaded", () => {
     loadPost();
+    loadComments();
   });
 </script>
 
 <div class="post">
   <p>Ładowanie posta</p>
 </div>
+<div class="comments">
+  <p>Ładowanie komentarzy</p>
+</div>
+@if (@HttpContextAccessor.HttpContext.Session.GetString("id") != null) {
+<form class="comment-form" onsubmit="addComment(event)">
+  <p class="comment-error"></p>
+
+  <textarea class="form-control" name="comment" id="comment-text-area"></textarea>
+
+  <input class="btn btn-primary" type="submit" name="submit" value="Skomentuj" />
+</form>
+}
