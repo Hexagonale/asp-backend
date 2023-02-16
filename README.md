@@ -29,7 +29,7 @@ Dodawać posty może każdy zalogowany użytkownik lub administrator. Należy po
 
 Kiedy w systemie znajdują się posty, pojawia się ich lista na stronie głównej. Lista jest posortowana od najnowszego posta do najstarszego. Listę tę widzi każdy, nawet nie zalogowani. Zawartość każdego posta na liście jest ograniczona do 150 znaków. W szczegóły posta można wejść poprzez kliknięcie w jego tytuł.
 
-![posts list](https://github.com/Hexagonale/asp-backend/blob/master/images/add-post-form.png?raw=true)
+![posts list](https://github.com/Hexagonale/asp-backend/blob/master/images/posts-list.png?raw=true)
 
 W szczegóły posta może wejść każdy. Jednak tylko zalogowani użytkownicy lub administratorzy mogą czytać lub tworzyć komentarze. Jeśli jesteśmy zalogowani pod postem widnieje formularz do dodawania komentarza. Aby dodać formularz należy wypełnić pole jego treści oraz kliknąć skomentuj. Po Dodaniu komentarza strona odświeża się automatycznie.
 
