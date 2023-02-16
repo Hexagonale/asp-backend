@@ -16,8 +16,8 @@ public class CommentsService
     private readonly UsersRepository _usersRepository;
     private readonly PostsRepository _postsRepository;
 
-    public List<Comment> getComments() {
-        return _commentsRepository.getComments();
+    public List<Comment> getComments(int postId) {
+        return _commentsRepository.getComments(postId);
     }
 
     public Comment addComment(string content, DateTime created, int authorId, int postId) {

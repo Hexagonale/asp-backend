@@ -22,14 +22,18 @@ public class CommentsController : ControllerBase
 
     [HttpGet]
     [Route("")]
-    public IActionResult getComments()
+    public IActionResult getComments([FromQuery] int? postId)
     {
         int? userId = _session.GetInt32("id");
         if(userId is null) {
             return StatusCode(403);
         }
 
-        List<Comment> comments = _commentsService.getComments();
+        if(postId is null) {
+            return StatusCode(400);
+        }
+
+        List<Comment> comments = _commentsService.getComments(postId.Value);
 
         return Ok(comments);
     }

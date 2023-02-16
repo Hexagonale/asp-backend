@@ -11,6 +11,10 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 32px;
+    padding: 16px;
+
+    border-radius: 8px;
+    box-shadow: 5px 5px 25px 0px rgba(0, 0, 0, 0.1);
   }
 
   .post > .post-header {
@@ -90,7 +94,7 @@
     }
 
     try {
-      const comments = await send("GET", `comments`);
+      const comments = await send("GET", `comments?postId=${postId}`);
       if (comments.length === 0) {
         commentsDiv.innerText = "Ten post nie ma jeszcze komentarzy";
         return;

@@ -17,9 +17,9 @@ public class DevelopmentCommentsRepository : CommentsRepository {
         return comment;
     }
 
-    public List<Comment> getComments()
+    public List<Comment> getComments(int postId)
     {
-        List<Comment> comments = context.comments.Include(c => c.author).ToList();
+        List<Comment> comments = context.comments.Where(c => c.postId == postId).Include(c => c.author).ToList();
 
         return comments;
     }

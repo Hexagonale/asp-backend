@@ -60,6 +60,9 @@
 
         const content = document.createElement("div");
         content.innerText = post.content.substring(0, 150);
+        if(post.content.length > 150) {
+          content.innerText += '...';
+        }
 
         postDiv.appendChild(header);
         postDiv.appendChild(content);
