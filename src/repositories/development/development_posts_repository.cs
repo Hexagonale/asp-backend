@@ -3,17 +3,16 @@ using Api.Database;
 
 namespace Api.Repositories;
 
-public class DevelopmentPostsRepository : PostsRepository
-{
-    private AppDbContext context;
-
+public class DevelopmentPostsRepository : PostsRepository {
     public DevelopmentPostsRepository(AppDbContext context) {
         this.context = context;
     }
 
-    public Post getPost(int id)
+    private AppDbContext context;
+
+    public Post getPost(int postId)
     {
-        Post like = context.posts.Where(p => p.id == id).Include(p => p.author).FirstOrDefault();
+        Post like = context.posts.Where(p => p.postId == postId).Include(p => p.author).FirstOrDefault();
         
         return like;
     }

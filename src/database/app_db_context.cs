@@ -19,6 +19,9 @@ public class AppDbContext: DbContext {
         string dbPath = System.IO.Path.Join(path, databaseName);
 
         optionsBuilder.UseSqlite($"Data source = {dbPath}");
+        optionsBuilder.EnableSensitiveDataLogging();
+
+        Console.WriteLine($"Using {dbPath} as database.");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {

@@ -3,13 +3,12 @@ using Api.Database;
 
 namespace Api.Repositories;
 
-public class DevelopmentCommentsRepository : CommentsRepository
-{
-    private AppDbContext context;
-
+public class DevelopmentCommentsRepository : CommentsRepository {
     public DevelopmentCommentsRepository(AppDbContext context) {
         this.context = context;
     }
+
+    private AppDbContext context;
 
     public Comment getComment(int id)
     {

@@ -3,7 +3,6 @@ using Api.Database;
 using Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<UsersRepository, DevelopmentUsersRepository>();
 builder.Services.AddScoped<PostsRepository, DevelopmentPostsRepository>();
 builder.Services.AddScoped<CommentsRepository, DevelopmentCommentsRepository>();
@@ -22,7 +21,7 @@ builder.Services.Configure<CookiePolicyOptions>(options => {
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<AppDbContext>();
+builder.Services.AddScoped<AppDbContext>();
 
 var app = builder.Build();
 

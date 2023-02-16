@@ -3,13 +3,12 @@ using Api.Database;
 
 namespace Api.Repositories;
 
-public class DevelopmentLikesRepository : LikesRepository
-{
-    private AppDbContext context;
-
+public class DevelopmentLikesRepository : LikesRepository {
     public DevelopmentLikesRepository(AppDbContext context) {
         this.context = context;
     }
+
+    private AppDbContext context;
 
     public Like getLike(int id)
     {

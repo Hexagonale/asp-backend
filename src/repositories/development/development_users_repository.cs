@@ -3,13 +3,12 @@ using Api.Database;
 
 namespace Api.Repositories;
 
-public class DevelopmentUsersRepository : UsersRepository
-{
-    private AppDbContext context;
-
+public class DevelopmentUsersRepository : UsersRepository {
     public DevelopmentUsersRepository(AppDbContext context) {
         this.context = context;
     }
+
+    private AppDbContext context;
 
     public User getUser(int id)
     {
