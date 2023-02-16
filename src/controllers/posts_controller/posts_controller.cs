@@ -65,7 +65,7 @@ public class PostsController : ControllerBase
         }
 
         Post post = _postsService.addPost(request.title, request.content, userId.Value);
-        if (userId is null)
+        if (post is null)
         {
             return StatusCode(401);
         }
