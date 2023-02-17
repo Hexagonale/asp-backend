@@ -2,7 +2,8 @@
 Prosty projekt forum internetowego. Backend jest napisany przy pomocy technologi ASP.NET Core w C# oraz używa Entity Framework jako ORM. Frontend jest napisany przy pomocy technologii Razor oraz przy wsparciu JavaScript do dynamicznego generowania treści.
 
 ## Uruchamianie projektu
-- Komenda `dotnet ef database update` - Utworzenie bazy danych
+- Komend cd `src` - Wejście do katalogu projektu.
+- Komenda `dotnet ef database update` - Utworzenie bazy danych.
 - Komenda `dotnet watch` - Uruchamia projekt oraz otwiera okno przeglądarki.
 
 ## Początkowe dane
